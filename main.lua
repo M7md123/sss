@@ -77,5 +77,6 @@ local function ShowTime()
         GameHour.Text = "Time: " .. tostring(timeValue.Value)
     end)
   else
+    
   end
 end

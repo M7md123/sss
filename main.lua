@@ -59,7 +59,7 @@ local ESP = {
 }
 
 -- تبويب الإعدادات
-local ESPTab = Window:CreateTab("ESP Settings", 4483362458)
+
 
 -- تفعيل/تعطيل ESP
 local Toggle = ESPTab:CreateToggle({

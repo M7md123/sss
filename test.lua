@@ -28,7 +28,7 @@ timeValue:GetPropertyChangedSignal("Value"):Connect(function()
     Label.Text = "Time: " .. tostring(timeValue.Value)
 end)
 
---[[]]
+--[[
 local espUi = game:GetService("CoreGui"):FindFirstChild("MohaESP_UI")
 if espUi then
     espUi:Destroy()

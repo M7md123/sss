@@ -123,7 +123,7 @@ EspTab:CreateToggle({
 
 -- فلاتر ESP
 EspTab:CreateToggle({
-    Name = "ESP Items)",
+    Name = "ESP Items",
     CurrentValue = ESP.Filters.Items.Enabled,
     Callback = function(Value)
         ESP.Filters.Items.Enabled = Value

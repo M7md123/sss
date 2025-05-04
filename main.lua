@@ -38,8 +38,8 @@ local Toggle = MiscTab:CreateToggle({
    CurrentValue = false,
    Flag = "ShowTimeToggle",
    Callback = function(Value)
-     _G.Flags.ShowTime == true
-     pcall(ShowTime())
+     _G.Flags.ShowTime = true
+     pcall(ShowTime
    end,
 })
 

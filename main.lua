@@ -26,7 +26,7 @@ local AdvancedESP = {
         Items = {
             Enabled = true,
             ModelNames = {"Item", "Weapon", "Ammo"}, -- أسماء الموديلات أو الأجزاء
-            ParentNames = {"RuntimeI", "Drops"} -- أسماء الآباء المحتملة
+            ParentNames = {"RuntimeItems", "Drops"} -- أسماء الآباء المحتملة
         },
         Enemies = {
             Enabled = true,

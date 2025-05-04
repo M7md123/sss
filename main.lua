@@ -53,7 +53,7 @@ local plr = LocalPlayer
 
 
 --  // UI //  --
-local ESP = {
+local EDP = {
     Enabled = false,
     Color = Color3.fromRGB(255, 0, 0), -- أحمر افتراضي
     OutlineColor = Color3.fromRGB(255, 255, 255), -- أبيض افتراضي

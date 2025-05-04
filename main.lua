@@ -48,8 +48,6 @@ RunService = game:GetService("RunService")
 
 
 --  // UI //  --
-
--- إعدادات ESP الأساسية
 local ESP = {
     Enabled = false,
     Color = Color3.fromRGB(255, 0, 0), -- أحمر افتراضي

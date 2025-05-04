@@ -72,7 +72,7 @@ local Toggle = EspTab:CreateToggle({
 })
 
 -- اختيار لون ESP
-Esp:CreateColorPicker({
+ESPTab:CreateColorPicker({
     Name = "لون ESP",
     Color = ESP.Color,
     Callback = function(Value)

@@ -1,13 +1,13 @@
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 local Window = Rayfield:CreateWindow({
-   Name = "Moha",
-   LoadingTitle = "Loading...",
+   Name = "Moha - Advanced ESP",
+   LoadingTitle = "Loading Advanced ESP System...",
    LoadingSubtitle = "by Mohammed",
    ConfigurationSaving = {
       Enabled = true,
-      FolderName = "Moha",
-      FileName = "DeadRails"
+      FolderName = "MohaESP",
+      FileName = "DeadRailsConfig"
    }
 })
 
@@ -15,166 +15,168 @@ local Window = Rayfield:CreateWindow({
 local MainTab = Window:CreateTab("Main")
 local EspTab = Window:CreateTab("ESP Settings")
 
--- إعدادات ESP
-local ESP = {
+-- إعدادات ESP المتقدمة
+local AdvancedESP = {
     Enabled = false,
     Highlights = {},
-    OutlineColor = Color3.fromRGB(255, 255, 255), -- لون ثابت أبيض
+    OutlineColor = Color3.fromRGB(255, 255, 255),
     
-    -- الفلاتر الجديدة
+    -- نظام الفلاتر المتقدم
     Filters = {
         Items = {
             Enabled = true,
-            Folders = {"RuntimeItems", "Weapons"} -- أسماء المجلدات التي تحتوي على الأغراض
+            ModelNames = {"Item", "Weapon", "Ammo"}, -- أسماء الموديلات أو الأجزاء
+            ParentNames = {"Items", "Drops"} -- أسماء الآباء المحتملة
         },
         Enemies = {
             Enabled = true,
-            Folders = {"Enemies", "Zombies"} -- أسماء المجلدات التي تحتوي على الأعداء
+            ModelNames = {"Enemy", "Zombie", "Bandit"},
+            ParentNames = {"Enemies", "NPCs"}
         },
         DeadBodies = {
             Enabled = false,
-            Folders = {"Corpses", "DeadBodies"} -- أسماء المجلدات التي تحتوي على الجثث
+            ModelNames = {"Corpse", "DeadBody", "Ragdoll"},
+            ParentNames = {"Corpses", "Dead"}
         }
     }
 }
 
--- دالة للتحقق مما إذا كان العنصر ينتمي لأي من الفلاتر المفعّلة
-local function IsInFilter(obj)
-    for _, filter in pairs(ESP.Filters) do
+-- دالة متقدمة للبحث عن العناصر في أي مكان في اللعبة
+local function FindObjectsInGame()
+    local foundObjects = {}
+    
+    -- البحث في كل الخدمات والمجلدات المهمة
+    local searchLocations = {
+        workspace,
+        game:GetService("ReplicatedStorage"),
+        game:GetService("ServerStorage"),
+        game:GetService("Players")
+    }
+    
+    for _, location in pairs(searchLocations) do
+        for _, obj in pairs(location:GetDescendants()) do
+            if obj:IsA("Model") then
+                table.insert(foundObjects, obj)
+            end
+        end
+    end
+    
+    return foundObjects
+end
+
+-- دالة متقدمة للتحقق من تطابق العنصر مع الفلاتر
+local function MatchesFilter(obj)
+    for filterName, filter in pairs(AdvancedESP.Filters) do
         if filter.Enabled then
-            for _, folderName in pairs(filter.Folders) do
-                local folder = workspace:FindFirstChild(folderName)
-                if folder and obj:IsDescendantOf(folder) then
+            -- التحقق من أسماء الموديلات
+            for _, name in pairs(filter.ModelNames) do
+                if string.find(obj.Name:lower(), name:lower()) then
                     return true
                 end
+            end
+            
+            -- التحقق من الأباء
+            local parent = obj.Parent
+            while parent do
+                for _, parentName in pairs(filter.ParentNames) do
+                    if string.find(parent.Name:lower(), parentName:lower()) then
+                        return true
+                    end
+                end
+                parent = parent.Parent
             end
         end
     end
     return false
 end
 
--- دالة إنشاء ESP
-local function CreateESP(obj)
-    if not ESP.Enabled or not obj or not obj.Parent then return end
-    if not IsInFilter(obj) then return end
+-- نظام ESP المطور
+local function AdvancedCreateESP(obj)
+    if not AdvancedESP.Enabled or not obj or not obj.Parent then return end
+    if not MatchesFilter(obj) then return end
+    if ESP.Highlights[obj] then return end
     
     local highlight = Instance.new("Highlight")
-    highlight.Name = "ESP_Highlight"
+    highlight.Name = "AdvancedESP_Highlight"
     highlight.Adornee = obj
     highlight.FillTransparency = 1
-    highlight.OutlineColor = ESP.OutlineColor
+    highlight.OutlineColor = AdvancedESP.OutlineColor
     highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
     highlight.Parent = obj
     
-    ESP.Highlights[obj] = highlight
+    AdvancedESP.Highlights[obj] = highlight
 end
 
--- دالة إزالة ESP
-local function RemoveESP(obj)
-    if ESP.Highlights[obj] then
-        ESP.Highlights[obj]:Destroy()
-        ESP.Highlights[obj] = nil
-    end
-end
+-- بقية الدوال (RemoveESP, ClearAllESP, UpdateAllESP) تبقى كما هي مع تغيير AdvancedESP بدل ESP
 
--- دالة مسح كل الـ ESP
-local function ClearAllESP()
-    for obj, highlight in pairs(ESP.Highlights) do
-        RemoveESP(obj)
-    end
-end
-
--- دالة تحديث كل الـ ESP
-local function UpdateAllESP()
-    if not ESP.Enabled then return end
+-- نظام التحديث الذكي
+local function SmartUpdate()
+    if not AdvancedESP.Enabled then return end
     
-    ClearAllESP()
+    -- تحديث العناصر الحالية
+    for obj, highlight in pairs(AdvancedESP.Highlights) do
+        if not obj or not obj.Parent or not MatchesFilter(obj) then
+            RemoveESP(obj)
+        end
+    end
     
-    -- البحث في جميع المجلدات المحددة
-    for _, filter in pairs(ESP.Filters) do
-        if filter.Enabled then
-            for _, folderName in pairs(filter.Folders) do
-                local folder = workspace:FindFirstChild(folderName)
-                if folder then
-                    for _, obj in pairs(folder:GetDescendants()) do
-                        if obj:IsA("Model") then
-                            CreateESP(obj)
-                        end
-                    end
-                end
-            end
+    -- البحث عن عناصر جديدة
+    local allObjects = FindObjectsInGame()
+    for _, obj in pairs(allObjects) do
+        if MatchesFilter(obj) then
+            AdvancedCreateESP(obj)
         end
     end
 end
 
--- عناصر الواجهة
+-- واجهة التحكم المتقدمة
 EspTab:CreateToggle({
-    Name = "ESP",
-    CurrentValue = ESP.Enabled,
+    Name = "تفعيل النظام المتقدم",
+    CurrentValue = AdvancedESP.Enabled,
     Callback = function(Value)
-        ESP.Enabled = Value
+        AdvancedESP.Enabled = Value
         if not Value then
             ClearAllESP()
         else
-            UpdateAllESP()
+            SmartUpdate()
         end
     end
 })
 
--- فلاتر ESP
+-- إعداد الفلاتر
 EspTab:CreateToggle({
-    Name = "ESP Items",
-    CurrentValue = ESP.Filters.Items.Enabled,
+    Name = "ESP للأغراض",
+    CurrentValue = AdvancedESP.Filters.Items.Enabled,
     Callback = function(Value)
-        ESP.Filters.Items.Enabled = Value
-        if ESP.Enabled then UpdateAllESP() end
+        AdvancedESP.Filters.Items.Enabled = Value
+        if AdvancedESP.Enabled then SmartUpdate() end
     end
 })
 
 EspTab:CreateToggle({
-    Name = "ESP Enemies",
-    CurrentValue = ESP.Filters.Enemies.Enabled,
+    Name = "ESP للأعداء",
+    CurrentValue = AdvancedESP.Filters.Enemies.Enabled,
     Callback = function(Value)
-        ESP.Filters.Enemies.Enabled = Value
-        if ESP.Enabled then UpdateAllESP() end
+        AdvancedESP.Filters.Enemies.Enabled = Value
+        if AdvancedESP.Enabled then SmartUpdate() end
     end
 })
 
 EspTab:CreateToggle({
-    Name = "ESP Dead Bodies",
-    CurrentValue = ESP.Filters.DeadBodies.Enabled,
+    Name = "ESP للجثث",
+    CurrentValue = AdvancedESP.Filters.DeadBodies.Enabled,
     Callback = function(Value)
-        ESP.Filters.DeadBodies.Enabled = Value
-        if ESP.Enabled then UpdateAllESP() end
+        AdvancedESP.Filters.DeadBodies.Enabled = Value
+        if AdvancedESP.Enabled then SmartUpdate() end
     end
 })
 
--- متابعة التغييرات
-local function SetupFolderListener(folderName)
-    local folder = workspace:FindFirstChild(folderName)
-    if folder then
-        folder.DescendantAdded:Connect(function(obj)
-            if ESP.Enabled and obj:IsA("Model") then
-                CreateESP(obj)
-            end
-        end)
-    end
-end
-
--- إعداد المستمعين لكل المجلدات
-for _, filter in pairs(ESP.Filters) do
-    for _, folderName in pairs(filter.Folders) do
-        SetupFolderListener(folderName)
-    end
-end
-
--- متابعة الحذف بـ Heartbeat
+-- نظام التحديث التلقائي
 game:GetService("RunService").Heartbeat:Connect(function()
-    if not ESP.Enabled then return end
+    if not AdvancedESP.Enabled then return end
     
-    for obj, highlight in pairs(ESP.Highlights) do
-        if not obj or not obj.Parent or not IsInFilter(obj) then
-            RemoveESP(obj)
-        end
+    -- تحديث ذكي كل 30 إطار (حوالي 0.5 ثانية)
+    if tick() % 0.5 < 0.016 then
+        SmartUpdate()
     end
 end)

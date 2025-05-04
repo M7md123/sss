@@ -76,5 +76,6 @@ local function ShowTime()
     timeValue:GetPropertyChangedSignal("Value"):Connect(function()
         GameHour.Text = "Time: " .. tostring(timeValue.Value)
     end)
+  else
   end
 end

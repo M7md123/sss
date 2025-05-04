@@ -58,7 +58,7 @@ local ESP = {
 }
 
 -- تفعيل/تعطيل ESP
-local Toggle = EspTab:CreateToggle({
+local Toggle = Esp:CreateToggle({
     Name = "تفعيل ESP",
     CurrentValue = ESP.Enabled,
     Callback = function(Value)

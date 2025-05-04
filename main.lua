@@ -39,7 +39,7 @@ local SafeESP = {
         Enemies = {
             Enabled = false,
             ModelNames = {},
-            ParentNames = {"NightEn"}
+            ParentNames = {"NightEnemies"}
         },
         DeadBodies = {
             Enabled = false,

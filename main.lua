@@ -141,7 +141,7 @@ EspTab:CreateToggle({
 })
 
 EspTab:CreateToggle({
-    Name = "ESP للجثث (Dead Bodies)",
+    Name = "ESP Dead Bodies",
     CurrentValue = ESP.Filters.DeadBodies.Enabled,
     Callback = function(Value)
         ESP.Filters.DeadBodies.Enabled = Value

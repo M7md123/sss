@@ -33,3 +33,5 @@ local espUi = game:GetService("CoreGui"):FindFirstChild("MohaESP_UI")
 if espUi then
     espUi:Destroy()
 end
+
+]]

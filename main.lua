@@ -57,9 +57,6 @@ local ESP = {
     Highlights = {}
 }
 
--- تبويب الإعدادات
-
-
 -- تفعيل/تعطيل ESP
 local Toggle = ESPTab:CreateToggle({
     Name = "تفعيل ESP",

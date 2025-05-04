@@ -82,7 +82,7 @@ EspTab:CreateColorPicker({
 })
 
 -- اختيار لون الحدود
-EspTab:CreateColorPicker({
+Esp:CreateColorPicker({
     Name = "لون حدود ESP",
     Color = ESP.OutlineColor,
     Callback = function(Value)

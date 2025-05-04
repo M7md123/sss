@@ -48,7 +48,7 @@ local Toggle = MiscTab:CreateToggle({
 --  // SHOW TIME //  --
 -- إنشاء ScreenGui
 local function ShowTime()
-  if _G.Flags.ShowTime = true then
+  if _G.Flags.ShowTime == true then
     local ScreenGui = Instance.new("ScreenGui", game:GetService("CoreGui"))
     ScreenGui.Name = "GameHourText"
 

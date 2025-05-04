@@ -39,7 +39,7 @@ local Toggle = MiscTab:CreateToggle({
    Flag = "ShowTimeToggle",
    Callback = function(Value)
      _G.Flags.ShowTime == true
-     pcall()
+     pcall(ShowTime())
    end,
 })
 

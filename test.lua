@@ -3,7 +3,7 @@ ScreenGui.Name = "MohaESP_UI"
 
 local Label = Instance.new("TextLabel")
 Label.Parent = ScreenGui
-Label.Text = "Moha the Legend"
+Label.Text = "Time"
 Label.Size = UDim2.new(0, 300, 0, 50)
 Label.Position = UDim2.new(0, 100, 1, -100)
 Label.BackgroundTransparency = 1

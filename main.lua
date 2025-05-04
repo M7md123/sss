@@ -109,7 +109,7 @@ end
 
 -- عناصر الواجهة
 EspTab:CreateToggle({
-    Name = "تفعيل ESP الرئيسي",
+    Name = " ESP",
     CurrentValue = ESP.Enabled,
     Callback = function(Value)
         ESP.Enabled = Value

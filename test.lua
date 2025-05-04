@@ -1,7 +1,10 @@
--- testing
-
-local ScreenGui = Instance.new("ScreenGui", game:GetService("CoreGui"))
+local player = game:GetService("Players").LocalPlayer
+local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "MohaESP_UI"
+ScreenGui.IgnoreGuiInset = true
+ScreenGui.ResetOnSpawn = false
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+ScreenGui.Parent = player:WaitForChild("PlayerGui")
 
 local Label = Instance.new("TextLabel")
 Label.Parent = ScreenGui
@@ -10,7 +13,7 @@ Label.Size = UDim2.new(0, 300, 0, 50)
 Label.Position = UDim2.new(0, -300, 1, -100)
 Label.BackgroundTransparency = 1
 Label.TextColor3 = Color3.fromRGB(255, 255, 255)
-Label.TextStrokeTransparency = 0 -- يعطي Outline
+Label.TextStrokeTransparency = 0
 Label.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
 Label.Font = Enum.Font.Garamond
 Label.TextSize = 24

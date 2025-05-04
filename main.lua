@@ -43,4 +43,3 @@ local Main = Window:CreateTab("Tab Example", "rewind")
 
 --  // VARIABLES //  --
 RunService = game:GetService("RunService")
-work

@@ -25,7 +25,7 @@ local ESP = {
     Filters = {
         Items = {
             Enabled = true,
-            Folders = {"Items", "Weapons"} -- أسماء المجلدات التي تحتوي على الأغراض
+            Folders = {"Run", "Weapons"} -- أسماء المجلدات التي تحتوي على الأغراض
         },
         Enemies = {
             Enabled = true,

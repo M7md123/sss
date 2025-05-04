@@ -132,7 +132,7 @@ EspTab:CreateToggle({
 })
 
 EspTab:CreateToggle({
-    Name = "ESP للأعداء (Enemies)",
+    Name = "ESP Enemies",
     CurrentValue = ESP.Filters.Enemies.Enabled,
     Callback = function(Value)
         ESP.Filters.Enemies.Enabled = Value

@@ -58,16 +58,6 @@ local ESP = {
     Highlights = {}
 }
 
--- إنشاء واجهة Rayfield
-local Window = Rayfield:CreateWindow({
-    Name = "ESP System",
-    LoadingTitle = "جاري تحميل نظام ESP...",
-    ConfigurationSaving = {
-        Enabled = true,
-        FolderName = "ESP_Settings"
-    }
-})
-
 -- تبويب الإعدادات
 local ESPTab = Window:CreateTab("ESP Settings", 4483362458)
 

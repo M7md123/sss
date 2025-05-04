@@ -50,3 +50,144 @@ RunService = game:GetService("RunService")
 
 
 
+local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Rayfield/main/source'))()
+
+-- إعدادات ESP الأساسية
+local ESP = {
+    Enabled = false,
+    Color = Color3.fromRGB(255, 0, 0), -- أحمر افتراضي
+    OutlineColor = Color3.fromRGB(255, 255, 255), -- أبيض افتراضي
+    TargetFolder = workspace:WaitForChild("TargetFolder"), -- غير لاسم المجلد المطلوب
+    Objects = {},
+    Highlights = {}
+}
+
+-- إنشاء واجهة Rayfield
+local Window = Rayfield:CreateWindow({
+    Name = "ESP System",
+    LoadingTitle = "جاري تحميل نظام ESP...",
+    ConfigurationSaving = {
+        Enabled = true,
+        FolderName = "ESP_Settings"
+    }
+})
+
+-- تبويب الإعدادات
+local ESPTab = Window:CreateTab("ESP Settings", 4483362458)
+
+-- تفعيل/تعطيل ESP
+local Toggle = ESPTab:CreateToggle({
+    Name = "تفعيل ESP",
+    CurrentValue = ESP.Enabled,
+    Callback = function(Value)
+        ESP.Enabled = Value
+        if not Value then
+            ClearAllESP()
+        else
+            UpdateAllESP()
+        end
+    end
+})
+
+-- اختيار لون ESP
+ESPTab:CreateColorPicker({
+    Name = "لون ESP",
+    Color = ESP.Color,
+    Callback = function(Value)
+        ESP.Color = Value
+        UpdateESPColors()
+    end
+})
+
+-- اختيار لون الحدود
+ESPTab:CreateColorPicker({
+    Name = "لون حدود ESP",
+    Color = ESP.OutlineColor,
+    Callback = function(Value)
+        ESP.OutlineColor = Value
+        UpdateESPColors()
+    end
+})
+
+-- دالة لإنشاء ESP لعنصر
+local function CreateESP(obj)
+    if not ESP.Enabled or not obj or not obj.Parent then return end
+    
+    local highlight = Instance.new("Highlight")
+    highlight.Name = "ESP_Highlight"
+    highlight.Adornee = obj
+    highlight.FillColor = ESP.Color
+    highlight.OutlineColor = ESP.OutlineColor
+    highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+    highlight.Parent = obj
+    
+    ESP.Highlights[obj] = highlight
+end
+
+-- دالة لمسح ESP لعنصر
+local function RemoveESP(obj)
+    if ESP.Highlights[obj] then
+        ESP.Highlights[obj]:Destroy()
+        ESP.Highlights[obj] = nil
+    end
+end
+
+-- دالة لمسح كل ESP
+local function ClearAllESP()
+    for obj, highlight in pairs(ESP.Highlights) do
+        RemoveESP(obj)
+    end
+end
+
+-- دالة لتحديث ألوان ESP
+local function UpdateESPColors()
+    for _, highlight in pairs(ESP.Highlights) do
+        highlight.FillColor = ESP.Color
+        highlight.OutlineColor = ESP.OutlineColor
+    end
+end
+
+-- دالة لتحديث كل ESP
+local function UpdateAllESP()
+    if not ESP.Enabled then return end
+    
+    ClearAllESP()
+    
+    -- إضافة ESP لكل الموديلات الموجودة
+    for _, obj in pairs(ESP.TargetFolder:GetDescendants()) do
+        if obj:IsA("Model") then
+            CreateESP(obj)
+        end
+    end
+end
+
+-- متابعة الإضافات الجديدة
+ESP.TargetFolder.DescendantAdded:Connect(function(obj)
+    if ESP.Enabled and obj:IsA("Model") then
+        CreateESP(obj)
+    end
+end)
+
+-- متابعة الحذف بـ Heartbeat
+game:GetService("RunService").Heartbeat:Connect(function()
+    if not ESP.Enabled then return end
+    
+    -- التحقق من العناصر المحذوفة
+    for obj, highlight in pairs(ESP.Highlights) do
+        if not obj or not obj.Parent or not obj:IsDescendantOf(ESP.TargetFolder) then
+            RemoveESP(obj)
+        end
+    end
+    
+    -- إضافة العناصر الجديدة (حماية إضافية)
+    for _, obj in pairs(ESP.TargetFolder:GetDescendants()) do
+        if obj:IsA("Model") and not ESP.Highlights[obj] then
+            CreateESP(obj)
+        end
+    end
+end)
+
+-- التحميل الأولي
+if ESP.Enabled then
+    UpdateAllESP()
+end

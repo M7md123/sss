@@ -12,7 +12,7 @@ local Window = Rayfield:CreateWindow({
 
    ConfigurationSaving = {
       Enabled = true,
-      FolderName = Mohs, -- Create a custom folder for your hub/game
+      FolderName = Moha, -- Create a custom folder for your hub/game
       FileName = "DeadRails"
    },
 
@@ -35,3 +35,5 @@ local Window = Rayfield:CreateWindow({
 })
 
 local Main = Window:CreateTab("Tab Example", "rewind")
+
+

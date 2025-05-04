@@ -78,7 +78,7 @@ local function ShowTime()
     end)
   else
     local espUi = game:GetService("CoreGui"):FindFirstChild("MohaESP_UI")
-if espUi then
+    if espUi then
     espUi:Destroy()
 end
   end

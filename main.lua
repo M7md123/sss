@@ -78,7 +78,7 @@ local function ShowTime()
         GameHour.Text = "Time: " .. tostring(timeValue.Value)
     end)
   else
-    local espUi = game:GetService("CoreGui"):FindFirstChild("MohaESP_UI")
+    local espUi = game:GetService("CoreGui"):FindFirstChild("mohaesp_ui")
     if espUi then
     espUi:Destroy()
     end

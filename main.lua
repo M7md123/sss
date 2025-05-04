@@ -13,7 +13,7 @@ local Window = Rayfield:CreateWindow({
    ConfigurationSaving = {
       Enabled = true,
       FolderName = Mohs, -- Create a custom folder for your hub/game
-      FileName = "Dead"
+      FileName = "DeadRails"
    },
 
    Discord = {

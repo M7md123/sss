@@ -76,27 +76,6 @@ local Toggle = EspTab:CreateToggle({
     end
 })
 
--- اختيار لون ESP
-EspTab:CreateColorPicker({
-    Name = "لون ESP",
-    Color = ESP.Color,
-    Callback = function(Value)
-        ESP.Color = Value
-        UpdateESPColors()
-    end
-})
-
--- اختيار لون الحدود
-EspTab:CreateColorPicker({
-    Name = "لون حدود ESP",
-    Color = ESP.OutlineColor,
-    Callback = function(Value)
-        ESP.OutlineColor = Value
-        UpdateESPColors()
-    end
-})
-
-
 
 
 --  // ESP //  --

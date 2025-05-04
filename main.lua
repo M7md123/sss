@@ -37,8 +37,8 @@ local Window = Rayfield:CreateWindow({
 
 
 --  // TABS //  --
-local Main = Window:CreateTab("Main", "rewind")
-local Esp = Window:CreateTab("ESP Settings", "rewind")
+local MainTab = Window:CreateTab("Main", "rewind")
+local EspTab = Window:CreateTab("ESP Settings", "rewind")
 
 
 

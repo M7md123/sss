@@ -34,7 +34,7 @@ local SafeESP = {
         Items = {
             Enabled = false,
             ModelNames = {}, -- يمكن تركها فارغة لتعمل على كل الموديلات في المجلد
-            ParentNames = {"RuntimeItems"} -- سيأخذ كل شيء في هذا المجلد
+            ParentNames = {"RuntimeItems", ""} -- سيأخذ كل شيء في هذا المجلد
         },
         Enemies = {
             Enabled = false,

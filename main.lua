@@ -48,10 +48,6 @@ RunService = game:GetService("RunService")
 
 --  // UI //  --
 
-
-
-local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Rayfield/main/source'))()
-
 -- إعدادات ESP الأساسية
 local ESP = {
     Enabled = false,
